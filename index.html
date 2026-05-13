@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeployBot Premium Agent Studio</title>
+    <meta
+      name="description"
+      content="DeployBot Premium Agent Studio — 5-agent product pipeline with live tracking, premium UI, and downloadable execution bundle."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb orb-a"></div>
+    <div class="bg-orb orb-b"></div>
+    <div class="noise"></div>
+
+    <main class="shell">
+      <section class="hero-card glass">
+        <div class="hero-copy">
+          <div class="eyebrow-row">
+            <span class="eyebrow">Premium AI product pipeline</span>
+            <span class="mini-pill">5 Agents</span>
+            <span class="mini-pill">Live Tracking</span>
+            <span class="mini-pill">ZIP Export</span>
+          </div>
+          <h1>Topic se product tak — ek professional pipeline jo idea, selection, naming, PRD aur download pack bana de.</h1>
+          <p>
+            Yeh upgraded studio specifically un flows ke liye bana hai jahan pehle ideas nikalne hain,
+            phir best concept select karna hai, phir internet / Play Store style naming research,
+            phir full PRD, aur finally ek downloadable execution bundle banana hai.
+          </p>
+          <div class="hero-actions">
+            <button id="heroStartBtn" class="primary-btn">Run 5-Agent Pipeline</button>
+            <button id="scrollPipelineBtn" class="ghost-btn">View Agent Board</button>
+          </div>
+        </div>
+
+        <div class="hero-stats-grid">
+          <article class="stat-card feature">
+            <span class="stat-label">Pipeline status</span>
+            <strong id="heroStatus">Ready for execution</strong>
+            <small>High-end studio interface with guided orchestration.</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Selected model</span>
+            <strong id="model-label">meta-llama/llama-4-scout-17b-16e-instruct</strong>
+            <small>Editable directly from control center.</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Output pack</span>
+            <strong id="zipState">ZIP not generated</strong>
+            <small>Will package all outputs as downloadable files.</small>
+          </article>
+          <article class="stat-card accent">
+            <span class="stat-label">Execution mode</span>
+            <strong id="key-mode">Bring your Groq API key</strong>
+            <small>Browser-run workflow, GitHub Pages friendly.</small>
+          </article>
+        </div>
+      </section>
+
+      <section class="workspace-grid">
+        <div class="control-stack">
+          <section class="panel glass control-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="panel-kicker">Control center</p>
+                <h2>Project Setup</h2>
+              </div>
+              <span class="dot live"></span>
+            </div>
+
+            <div class="grid-2">
+              <label class="field">
+                <span>Build type</span>
+                <div class="segmented">
+                  <button id="typeApp" class="segment active" data-type="app" type="button">App</button>
+                  <button id="typeAgent" class="segment" data-type="agent" type="button">Agent</button>
+                </div>
+              </label>
+
+              <label class="field">
+                <span>Primary market</span>
+                <input id="market" type="text" placeholder="India, global, creators, founders..." />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Topics / niches</span>
+              <textarea id="topics" rows="5" placeholder="Example: AI sales agents, creator automation, edtech growth, local business SaaS"></textarea>
+            </label>
+
+            <div class="grid-2">
+              <label class="field">
+                <span>Target audience</span>
+                <input id="audience" type="text" placeholder="Founders, agencies, students, SMB owners..." />
+              </label>
+              <label class="field">
+                <span>Business goal</span>
+                <input id="goal" type="text" placeholder="Monetizable B2B SaaS, consumer growth app, premium service agent..." />
+              </label>
+            </div>
+
+            <label class="field">
+              <span>Must-have features / constraints</span>
+              <textarea id="constraints" rows="4" placeholder="Example: recurring revenue, AI-first UX, simple onboarding, Play Store friendly, Hindi-first support"></textarea>
+            </label>
+
+            <div class="grid-2">
+              <label class="field">
+                <span>Groq API key</span>
+                <input id="apiKey" type="password" placeholder="Paste gsk_..." autocomplete="off" />
+              </label>
+              <label class="field">
+                <span>Model</span>
+                <input id="model" type="text" value="meta-llama/llama-4-scout-17b-16e-instruct" />
+              </label>
+            </div>
+
+            <div class="quick-prompts">
+              <button class="chip" data-preset="saas">AI SaaS ideas</button>
+              <button class="chip" data-preset="consumer">Consumer app ideas</button>
+              <button class="chip" data-preset="agent">Service agent ideas</button>
+              <button class="chip" data-preset="hindi">Hindi-first products</button>
+            </div>
+
+            <div class="actions actions-stretch">
+              <button id="startBtn" class="primary-btn">Start Premium Run</button>
+              <button id="downloadBtn" class="ghost-btn" type="button" disabled>Download ZIP</button>
+              <button id="clearBtn" class="ghost-btn" type="button">Reset</button>
+            </div>
+          </section>
+
+          <section class="panel glass telemetry-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="panel-kicker">Live telemetry</p>
+                <h2>Execution Stats</h2>
+              </div>
+              <span id="statusBadge" class="status-badge idle">Idle</span>
+            </div>
+
+            <div class="telemetry-grid">
+              <article class="metric-card">
+                <span>Workflow ID</span>
+                <strong id="workflowId">No run yet</strong>
+              </article>
+              <article class="metric-card">
+                <span>Completed agents</span>
+                <strong id="completedAgents">0 / 5</strong>
+              </article>
+              <article class="metric-card">
+                <span>Live progress</span>
+                <strong id="progressLabel">0%</strong>
+              </article>
+              <article class="metric-card">
+                <span>Output size</span>
+                <strong id="charCounter">0 chars</strong>
+              </article>
+            </div>
+
+            <div class="progress-rail">
+              <div id="progressBar" class="progress-bar"></div>
+            </div>
+          </section>
+        </div>
+
+        <div class="output-stack">
+          <section id="pipelineBoard" class="panel glass agent-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="panel-kicker">Agent board</p>
+                <h2>Live 5-Step Pipeline</h2>
+              </div>
+              <span class="workflow-id" id="pipelineState">Waiting to start</span>
+            </div>
+
+            <div class="agent-grid">
+              <article class="agent-card" data-agent-card="1">
+                <div class="agent-top">
+                  <div>
+                    <span class="agent-index">01</span>
+                    <h3>Idea Finder</h3>
+                  </div>
+                  <span class="agent-state queued" data-agent-state="1">Queued</span>
+                </div>
+                <p>Topics ke basis par high-potential app / agent concepts nikalega.</p>
+                <div class="agent-preview" id="agentPreview1">No output yet.</div>
+              </article>
+
+              <article class="agent-card" data-agent-card="2">
+                <div class="agent-top">
+                  <div>
+                    <span class="agent-index">02</span>
+                    <h3>Best Idea Selector</h3>
+                  </div>
+                  <span class="agent-state queued" data-agent-state="2">Queued</span>
+                </div>
+                <p>Idea pool me se ek strongest monetizable direction choose karega.</p>
+                <div class="agent-preview" id="agentPreview2">No output yet.</div>
+              </article>
+
+              <article class="agent-card" data-agent-card="3">
+                <div class="agent-top">
+                  <div>
+                    <span class="agent-index">03</span>
+                    <h3>Name Researcher</h3>
+                  </div>
+                  <span class="agent-state queued" data-agent-state="3">Queued</span>
+                </div>
+                <p>Play Store / internet style brand naming research karke unique options dega.</p>
+                <div class="agent-preview" id="agentPreview3">No output yet.</div>
+              </article>
+
+              <article class="agent-card" data-agent-card="4">
+                <div class="agent-top">
+                  <div>
+                    <span class="agent-index">04</span>
+                    <h3>PRD Architect</h3>
+                  </div>
+                  <span class="agent-state queued" data-agent-state="4">Queued</span>
+                </div>
+                <p>Complete product requirements document full detail ke saath ready karega.</p>
+                <div class="agent-preview" id="agentPreview4">No output yet.</div>
+              </article>
+
+              <article class="agent-card" data-agent-card="5">
+                <div class="agent-top">
+                  <div>
+                    <span class="agent-index">05</span>
+                    <h3>Download Pack Builder</h3>
+                  </div>
+                  <span class="agent-state queued" data-agent-state="5">Queued</span>
+                </div>
+                <p>Final docs ko deliverable pack me convert karke ZIP export enable karega.</p>
+                <div class="agent-preview" id="agentPreview5">No output yet.</div>
+              </article>
+            </div>
+          </section>
+
+          <section class="panel glass stream-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="panel-kicker">Console</p>
+                <h2>Live Tracking</h2>
+              </div>
+              <div class="status-wrap">
+                <span class="mini-pill active">Streaming</span>
+                <span class="workflow-id" id="consoleHint">Agent logs will appear here</span>
+              </div>
+            </div>
+
+            <div id="terminal" class="terminal"></div>
+          </section>
+
+          <section class="panel glass result-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="panel-kicker">Deliverables</p>
+                <h2>Output Workspace</h2>
+              </div>
+              <div class="result-actions">
+                <button id="copyBtn" class="tiny-btn" type="button">Copy Master Output</button>
+              </div>
+            </div>
+
+            <div class="tabbar" id="tabbar">
+              <button class="tab active" data-tab="master" type="button">Master</button>
+              <button class="tab" data-tab="ideas" type="button">Ideas</button>
+              <button class="tab" data-tab="winner" type="button">Best Pick</button>
+              <button class="tab" data-tab="naming" type="button">Naming</button>
+              <button class="tab" data-tab="prd" type="button">PRD</button>
+              <button class="tab" data-tab="pack" type="button">Download Pack</button>
+            </div>
+
+            <div id="result" class="result markdown-body"></div>
+          </section>
+        </div>
+      </section>
+
+      <footer class="foot">
+        <span>DeployBot Premium Agent Studio · Premium multi-agent frontend · GitHub Pages ready</span>
+      </footer>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
